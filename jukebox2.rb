@@ -12,52 +12,16 @@ class Jukebox
 		]
 	end
 
-	def start
-		while (1)
-			puts "Welcome to the Jukebox. What would you like to do? [play], [list], [help], [exit]"
-			command, args = gets.split(" ", 2)
-
-			case command.downcase.strip
-				when "play"
-					if (args.match(/^\d+$/))
-						puts play_by_index(args.strip.to_i)
-					else
-						puts play_by_name(args.strip)
-					end
-				when "list"
-					puts list
-				when "help"
-					puts help
-				when "exit"
-					puts exit
-					break
-				else
-					puts "Unrecognized command"
-					next
-			end
-		end
-	end
-
 	def list
 		song_list = @songs.each_with_index.map do |song, i|
-			"#{i}: #{song}"
+			"#{i+1}: #{song}"
 		end		
 		song_list.to_s
 	end
 
 	def play(song)
-		return "Playing #{@songs[song]}" if song.is_a?(Integer) && (is_valid_index?(song.to_i))
+		return "Playing #{@songs[song.to_i]}" if (is_valid_index?(song.to_i))
 		return "Playing #{@songs[index_of_song(song)]}" if has_song?(song.to_s)
-		"Sorry we don't have that song"
-	end
-
-	def play_by_name(song)
-		return "Playing #{@songs[index_of_song(song)]}" if has_song?(song)
-		"Sorry we don't have that song"
-	end
-
-	def play_by_index(song)
-		return "Playing #{@songs[song]}" if is_valid_index?(song.to_i)
 		"Sorry we don't have that song"
 	end
 
@@ -90,16 +54,13 @@ private
 	end
 end
 
-# while (1)
-# 	jukebox = Jukebox.new
+while (1)
+	jukebox = Jukebox.new
 
-# 	puts "Welcome to the Jukebox. What would you like to do? [play], [list], [help], [exit]"
-# 	args = []
-# 	command, arg = gets.split(" ", 2)
-# 	args << arg.strip if !arg.empty?
+	puts "Welcome to the Jukebox. What would you like to do? [play], [list], [help], [exit]"
+	args = []
+	command, arg = gets.split(" ", 2)
+	args << arg.strip if !arg.empty?
 
-# 	puts jukebox.send(command.downcase.strip, *args)
-# end
-
-jukebox = Jukebox.new
-jukebox.start
+	puts jukebox.send(command.downcase.strip, *args)
+end
