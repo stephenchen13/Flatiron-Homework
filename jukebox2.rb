@@ -1,15 +1,8 @@
 class Jukebox
-	attr_reader :songs
-	def initialize
-		@songs = [
-			"The Phoenix - 1901",
-			"Tokyo Police Club - Wait Up",
-			"Sufjan Stevens - Too Much",
-			"The Naked and the Famous - Young Blood",
-			"(Far From) Home - Tiga",
-			"The Cults - Abducted",
-			"The Phoenix - Consolation Prizes"
-		]
+	attr_accessor :songs
+
+	def load_songs(songs)
+		@songs = songs
 	end
 
 	def list
@@ -56,11 +49,20 @@ end
 
 while (1)
 	jukebox = Jukebox.new
+	jukebox.songs = [
+			"The Phoenix - 1901",
+			"Tokyo Police Club - Wait Up",
+			"Sufjan Stevens - Too Much",
+			"The Naked and the Famous - Young Blood",
+			"(Far From) Home - Tiga",
+			"The Cults - Abducted",
+			"The Phoenix - Consolation Prizes"
+		]
 
 	puts "Welcome to the Jukebox. What would you like to do? [play], [list], [help], [exit]"
 	args = []
 	command, arg = gets.split(" ", 2)
 	args << arg.strip if !arg.empty?
 
-	puts jukebox.send(command.downcase.strip, *args)
+	puts jukebox.send(command.downcase.strip, *args) if ["play", "list", "help", "exit"].include?(command.downcase.strip)
 end
